@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.example.springbootmasterclass.person.Person;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -25,6 +27,9 @@ import java.util.concurrent.TimeUnit;
 @EnableAsync
 public class SpringBootMasterClassApplication {
 
+    @Value("${app.stripe.api-key}")
+    private String stripeKey;
+
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(SpringBootMasterClassApplication.class, args);
 
@@ -34,6 +39,13 @@ public class SpringBootMasterClassApplication {
         }
 
         System.out.println(beanDefinitionNames.length);
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunnerStripeKey() {
+        return args -> {
+            System.out.println(stripeKey);
+        };
     }
 
     //    @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -47,6 +59,13 @@ public class SpringBootMasterClassApplication {
     @Bean
     public String blueBean() {
         return "Chelsea";
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunnerApiURL(Environment environment) {
+        return args -> {
+            System.out.println(environment.getProperty("app.stripe.api-url"));
+        };
     }
 
     @Bean
