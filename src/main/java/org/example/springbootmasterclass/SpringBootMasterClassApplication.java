@@ -4,20 +4,25 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.example.springbootmasterclass.jsonplaceholder.JsonPlaceholderService;
 import org.example.springbootmasterclass.person.Person;
-import org.example.springbootmasterclass.post.Post;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 @SpringBootApplication
+@EnableScheduling
+@EnableAsync
 public class SpringBootMasterClassApplication {
 
     public static void main(String[] args) {
@@ -75,6 +80,25 @@ public class SpringBootMasterClassApplication {
         return args -> {
 
         };
+    }
+
+    @Scheduled(
+//            fixedRate = 5, timeUnit = TimeUnit.SECONDS, initialDelay = 10
+            cron = "*/5 * * * * *"
+    )
+    @Async
+    public void sendEmails() throws InterruptedException {
+        System.out.println("Start sending email");
+        Thread.sleep(2000);
+        System.out.println("End sending email");
+    }
+
+    @Scheduled(cron = "*/5 * * * * *")
+    @Async
+    public void generateSalesReport() throws InterruptedException {
+        System.out.println("Start sales report");
+        Thread.sleep(2000);
+        System.out.println("End sales report");
     }
 
     public record User(int id, String name) {}
