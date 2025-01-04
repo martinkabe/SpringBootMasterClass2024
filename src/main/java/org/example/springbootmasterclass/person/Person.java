@@ -40,6 +40,9 @@ public class Person {
         this.email = email;
     }
 
+    public Person(int i, String alice) {
+    }
+
     public String getProfile() {
         return "Person{" +
                 "id=" + id +

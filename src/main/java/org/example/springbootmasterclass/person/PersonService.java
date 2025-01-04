@@ -4,11 +4,10 @@ import org.example.springbootmasterclass.SortingOrder;
 import org.example.springbootmasterclass.exception.DuplicateResourceException;
 import org.example.springbootmasterclass.exception.InvalidValueException;
 import org.example.springbootmasterclass.exception.ResourceNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -27,34 +26,18 @@ public class PersonService {
     }
 
     public List<Person> getPeople(
-            SortingOrder sort,
-            Integer limit
+            SortingOrder sort
     ) {
-
-        if (limit < 1) {
-            throw new InvalidValueException("Invalid input of limit '" + limit + "'. Limit must be a positive integer.");
-        }
-
         if (sort != SortingOrder.ASC && sort != SortingOrder.DESC) {
             throw new InvalidValueException("Invalid sorting order: " + sort);
         }
 
-        if (sort == SortingOrder.ASC) {
-
-//            System.out.println(httpMethod);
-//            System.out.println(request.getLocalAddr());
-//            System.out.println(response.isCommitted());
-//            System.out.println(contentType);
-
-            return personRepository.findAll().stream()
-                    .sorted(Comparator.comparing(Person::getId))
-                    .limit(limit)
-                    .collect(Collectors.toList());
-        }
-        return personRepository.findAll().stream()
-                .sorted(Comparator.comparing(Person::getId).reversed())
-                .limit(limit)
-                .collect(Collectors.toList());
+        return personRepository.findAll(
+                Sort.by(
+                        Sort.Direction.valueOf(sort.name()),
+                        "id"
+                )
+        );
     }
 
     public Person getPersonById(

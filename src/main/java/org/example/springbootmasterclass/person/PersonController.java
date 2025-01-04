@@ -31,10 +31,9 @@ public class PersonController {
             ServletRequest request,
             ServletResponse response,
             @RequestHeader("Content-Type") String contentType,
-            @RequestParam(value = "sort", required = false, defaultValue = "ASC") SortingOrder sort,
-            @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit
+            @RequestParam(value = "sort", required = false, defaultValue = "ASC") SortingOrder sort
     ) {
-        return personService.getPeople(sort, limit);
+        return personService.getPeople(sort);
     }
 
     @GetMapping("{id}")
