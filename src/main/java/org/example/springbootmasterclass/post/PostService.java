@@ -35,12 +35,12 @@ public class PostService {
     }
 
     // using web client
-    public Post getPostById(Integer id) {
+    public Mono<Post> getPostById(Integer id) {
         try {
-            return restClient.get()
+            return webClient.get()
                     .uri("/posts/{id}", id)
                     .retrieve()
-                    .body(Post.class);
+                    .bodyToMono(Post.class);
         } catch (HttpClientErrorException ex) {
             throw new ResponseStatusException(
                     ex.getStatusCode(),

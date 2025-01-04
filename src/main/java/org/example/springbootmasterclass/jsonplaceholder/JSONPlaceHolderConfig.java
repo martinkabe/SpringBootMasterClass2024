@@ -14,11 +14,11 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @Configuration
 public class JSONPlaceHolderConfig {
 
+    private final String baseURL = "https://jsonplaceholder.typicode.com";
+
     @Bean("rest-client")
     JsonPlaceholderService jsonPlaceHolderRestClientService() {
-        RestClient restClient = RestClient.create(
-                "https://jsonplaceholder.typicode.com"
-        );
+        RestClient restClient = RestClient.create(baseURL);
         return HttpServiceProxyFactory
                 .builderFor(RestClientAdapter.create(restClient))
                 .build()
@@ -29,7 +29,7 @@ public class JSONPlaceHolderConfig {
     @Bean("web-client")
     JsonPlaceholderService jsonPlaceHolderWebClientService() {
         WebClient restClient = WebClient.builder()
-                .baseUrl("https://jsonplaceholder.typicode.com")
+                .baseUrl(baseURL)
                 .defaultStatusHandler(HttpStatusCode::isError, clientResponse -> {
                     throw new ResponseStatusException(clientResponse.statusCode());
                 }).build();
@@ -39,5 +39,4 @@ public class JSONPlaceHolderConfig {
                 .build()
                 .createClient(JsonPlaceholderService.class);
     }
-
 }

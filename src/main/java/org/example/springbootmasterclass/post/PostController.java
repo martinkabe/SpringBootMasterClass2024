@@ -3,6 +3,7 @@ package org.example.springbootmasterclass.post;
 import org.example.springbootmasterclass.jsonplaceholder.JsonPlaceholderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class PostController {
 
     @GetMapping("{id}")
     public Post getPostById(@PathVariable("id") Integer id) {
-        return postService.getPostById(id);
+        return jsonPlaceholderService.getPostById(id);
     }
 
     @DeleteMapping("{id}")
@@ -43,6 +44,6 @@ public class PostController {
     @PutMapping("{id}")
     public void updatePost(@PathVariable("id") Integer id,
                            @RequestBody Post post) {
-        postService.updatePost(id, post);
+        jsonPlaceholderService.updatePost(id, post);
     }
 }
