@@ -2,25 +2,26 @@ package org.example.springbootmasterclass.person;
 
 import org.example.springbootmasterclass.SortingOrder;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
 
-    @MockitoBean
-    private PersonRepository personRepository;
-
-    @MockitoBean
+    @Mock
     private FakePersonRepository fakePersonRepository;
 
-    @Autowired
+    @Mock
+    private PersonRepository personRepository;
+
+    @InjectMocks
     private PersonService personService;
 
     @Test

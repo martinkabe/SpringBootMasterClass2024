@@ -30,7 +30,7 @@ public class PersonController {
             HttpMethod httpMethod,
             ServletRequest request,
             ServletResponse response,
-            @RequestHeader("Content-Type") String contentType,
+            @RequestHeader(value = "Content-Type", required = false) String contentType,
             @RequestParam(value = "sort", required = false, defaultValue = "ASC") SortingOrder sort
     ) {
         return personService.getPeople(sort);
