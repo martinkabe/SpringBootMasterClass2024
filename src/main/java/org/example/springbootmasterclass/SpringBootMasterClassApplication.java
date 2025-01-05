@@ -101,24 +101,24 @@ public class SpringBootMasterClassApplication {
         };
     }
 
-    @Scheduled(
-//            fixedRate = 5, timeUnit = TimeUnit.SECONDS, initialDelay = 10
-            cron = "*/5 * * * * *"
-    )
-    @Async
-    public void sendEmails() throws InterruptedException {
-        System.out.println("Start sending email");
-        Thread.sleep(2000);
-        System.out.println("End sending email");
-    }
-
-    @Scheduled(cron = "*/5 * * * * *")
-    @Async
-    public void generateSalesReport() throws InterruptedException {
-        System.out.println("Start sales report");
-        Thread.sleep(2000);
-        System.out.println("End sales report");
-    }
+//    @Scheduled(
+////            fixedRate = 5, timeUnit = TimeUnit.SECONDS, initialDelay = 10
+//            cron = "*/5 * * * * *"
+//    )
+//    @Async
+//    public void sendEmails() throws InterruptedException {
+//        System.out.println("Start sending email");
+//        Thread.sleep(2000);
+//        System.out.println("End sending email");
+//    }
+//
+//    @Scheduled(cron = "*/5 * * * * *")
+//    @Async
+//    public void generateSalesReport() throws InterruptedException {
+//        System.out.println("Start sales report");
+//        Thread.sleep(2000);
+//        System.out.println("End sales report");
+//    }
 
     public record User(int id, String name) {}
 
