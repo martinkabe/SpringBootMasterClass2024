@@ -20,9 +20,14 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
+                    // Allow unauthenticated access to /api/v1/ai2/chat
+                    auth.requestMatchers("/api/v1/ai2/**").permitAll();
+                    // Allow unauthenticated access to endpoints under /api/v1/persons
+                    auth.requestMatchers("/api/v1/persons/**").permitAll();
+                    // Require authentication for all other endpoints
                     auth.anyRequest().authenticated();
                 })
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults()) // Enable Basic authentication
                 .build();
     }
 
@@ -42,3 +47,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

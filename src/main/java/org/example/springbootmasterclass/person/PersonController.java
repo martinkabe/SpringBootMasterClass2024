@@ -6,12 +6,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import org.example.springbootmasterclass.SortingOrder;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/persons")
